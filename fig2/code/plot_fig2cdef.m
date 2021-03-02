@@ -15,6 +15,7 @@ printfigure = 0;
 
 tp = list_files(processed_folder,'*.mat');
 mm = 1;
+fig1 = figure();
 clf,
 ax = [];
 lab_list = {'haesler','hantman','lee','moser','o_keefe','carandini'};
@@ -103,18 +104,19 @@ set(ax(:),'box','off','ticklength',get(ax(end),'ticklength').*3,...
     'linewidth',0.5,'yscale','linear','ygrid','off','ytick',tmp_tick,...
     'yticklabel',cell_tick,'xlim',[2 61])
 
-set(gcf,'papersize',[2.5,2*2],'paperposition',[0,0,2.5,2*2])
+set(fig1,'papersize',[2.5,2*2],'paperposition',[0,0,2.5,2*2])
 
 figure_name = sprintf('%s%s%s%s%2.0f%s',figure_folder,filesep,'figures\','event_rates_median',rem(now,1)*1000,'.pdf');
 if printfigure
-    print(gcf,'-dpdf','-loose',figure_name)
+    print(fig1,'-dpdf','-loose',figure_name)
 end
 
 %% slope and significance
 
 printfigure = 0;
 mm=10;
-clf
+fig2 = figure();
+clf,
 ax = [];
 
 ax(1) = subplot(2,1,1);
@@ -126,6 +128,9 @@ c_sorted = c_sig(idx,:);
 scatter(tt,vv,ones(1,length(tt)).*mm,c_sorted),hold on
 scatter(tt(p_idx),vv(p_idx),ones(1,sum(p_idx)).*mm,c_sorted(p_idx,:),'filled')
 plot([0,length(idx)],[0 0],'--','color',[0.5,0.5,0.5])
+
+ylabel('slope')
+xlabel('#experiments')
 
 ax(2) = subplot(2,1,2);
 [vv,idx2] = sort(yield_slope);
@@ -144,9 +149,9 @@ set(ax(:),'box','off','ticklength',get(ax(end),'ticklength').*3,...
     'tickdir','out','fontsize',7,'fontname','arial',...
     'linewidth',0.5,'ylim',[-0.025 0.025])
 
-set(gcf,'papersize',[1.5,2*2],'paperposition',[0,0,1.5,2*2])
+set(fig2,'papersize',[1.5,2*2],'paperposition',[0,0,1.5,2*2])
 
 figure_name = sprintf('%s%s%s%s%2.0f%s',figure_folder,filesep,'figures\','event_rates_linear_fit',rem(now,1)*1000,'.pdf');
 if printfigure
-    print(gcf,'-dpdf','-loose',figure_name)
+    print(fig2,'-dpdf','-loose',figure_name)
 end

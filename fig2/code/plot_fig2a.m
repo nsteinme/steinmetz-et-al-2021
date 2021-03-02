@@ -93,7 +93,8 @@ set(ax(:),'box','off','ticklength',get(ax(end),'ticklength').*3,...
     'linewidth',0.5,'xscale','log',...
     'xlim',[75 300])
 
-
+xlabel(sprintf('%s%s%s','Amplitude ',char(181),'V'))
+ylabel('Proportion of spikes')
 colormap(ccol);
 custom_bar = colorbar;
 a = custom_bar.Position;
